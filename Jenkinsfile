@@ -2,7 +2,7 @@ pipeline {
 
     // MASTER-SLAVE Worker Selection
     agent {
-        label "${env.BRANCH_NAME == 'main' ? 'worker-prod' : 'worker-staging'}"
+        label "${env.BRANCH_NAME == 'main' ? 'Worker-prod' : 'Worker-staging'}"
     }
 
     tools {
@@ -10,7 +10,7 @@ pipeline {
     }
 
     environment {
-        DOCKERHUB_USERNAME = "biswajit7815"
+        DOCKERHUB_USERNAME = "kundgar19"
         BACKEND_IMAGE      = "blood-backend"
         FRONTEND_IMAGE     = "blood-frontend"
         IMAGE_TAG          = "${BUILD_NUMBER}"
@@ -26,7 +26,7 @@ pipeline {
         BACKEND_PORT = '5000'
 
         // EC2 Public IP
-        EC2_PUBLIC_IP = "${env.BRANCH_NAME == 'main' ? '3.110.220.24' : '13.233.90.203'}"
+        EC2_PUBLIC_IP = "${env.BRANCH_NAME == 'main' ? '100.26.147.182' : '3.239.188.192'}"
 
         // SonarQube Project
         SONAR_PROJECT_KEY = "${env.BRANCH_NAME == 'main' ? 'blood-bank-prod' : 'blood-bank-staging'}"
@@ -343,7 +343,7 @@ pipeline {
         success {
 
             emailext(
-                to:                 'biswajitbehera1868@gmail.com',
+                to:                 'vaibhavkundgar181@gmail.com',
                 subject:            "[${DEPLOY_ENV}] Build #${BUILD_NUMBER} - ${JOB_NAME} - SUCCESS",
                 mimeType:           'text/html',
                 attachmentsPattern: 'reports/trivy/*.txt',
@@ -409,7 +409,7 @@ pipeline {
         failure {
 
             emailext(
-                to:                 'biswajitbehera1868@gmail.com',
+                to:                 'vaibhavkundgar181@gmail.com',
                 subject:            "[${DEPLOY_ENV}] Build #${BUILD_NUMBER} - ${JOB_NAME} - FAILED",
                 mimeType:           'text/html',
                 attachmentsPattern: 'reports/trivy/*.txt',
